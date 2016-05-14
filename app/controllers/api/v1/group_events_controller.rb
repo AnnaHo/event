@@ -1,7 +1,7 @@
 class Api::V1::GroupEventsController < ApiController
   
   def index
-    render json: GroupEvent.all
+    render json: GroupEvent.where(active: true)
   end
 
   def create
