@@ -69,6 +69,12 @@ describe 'DELETE /v1/group_events/:id', type: :request do
     group_event.reload
     expect(group_event.active).to be false 
   end
+
+  it 'return error while event id are invalid' do
+    delete "/v1/group_events/id"
+    expect(response_json["message"]).to eq "group event not found"
+    expect(response).to have_http_status 404
+  end
 end
 
 def response_json
