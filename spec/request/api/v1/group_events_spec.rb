@@ -18,6 +18,29 @@ describe 'POST /v1/group_events', type: :request do
     group_event = GroupEvent.last
     expect(response_json).to eq(JSON.parse(group_event.to_json))
   end
+
+  context 'with published status' do
+    it 'create an event failed with invalid params' do
+      post '/v1/group_events', {group_event: {name: "a published event", 
+                                              location: "Taipei", 
+                                              status: "published"}}
+      expect(response).to have_http_status 422
+      expect(response_json["message"]).to eq "failed to create event"
+    end
+
+    it 'create an event successfully with vaild params' do
+      start_date = DateTime.now
+      end_date = start_date+30.days
+      post '/v1/group_events', {group_event: {name: "a published event", 
+                                              location: "Taipei", 
+                                              start_date: start_date, 
+                                              end_date: end_date, 
+                                              description: "RailsPacific 2016", 
+                                              status: "published"}}
+      group_event = GroupEvent.last
+      expect(response_json).to eq(JSON.parse(group_event.to_json))
+    end
+  end
 end
 
 def response_json
