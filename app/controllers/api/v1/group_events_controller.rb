@@ -23,6 +23,18 @@ class Api::V1::GroupEventsController < ApiController
       render json: {message: "failed to update event with invalid params", errors: group_event.errors.full_messages}, status: 422
     end
   end
+  
+  def destroy
+    group_event = GroupEvent.find_by(params[:id])
+
+    if group_event
+      group_event.active = false
+      group_event.save
+      render json: {message: "group event are removed"}
+    else
+      render json: {message: "group event not found"}, status: 404
+    end
+  end
 
   private
 

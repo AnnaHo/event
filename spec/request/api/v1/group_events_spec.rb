@@ -60,6 +60,17 @@ describe 'PUT /v1/group_events/:id', type: :request do
   end
 end
 
+describe 'DELETE /v1/group_events/:id', type: :request do
+  it 'soft delete group event' do
+    group_event = GroupEvent.create(name: "an event", status: "draft")
+
+    delete "/v1/group_events/#{group_event.id}"
+    expect(response_json["message"]).to eq "group event are removed"
+    group_event.reload
+    expect(group_event.active).to be false 
+  end
+end
+
 def response_json
   JSON.parse(response.body)
 end
