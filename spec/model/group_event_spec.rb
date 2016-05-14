@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe GroupEvent, 'Validations', :type => :model do
+  
+  it { is_expected.to validate_presence_of(:status)}
+
   context "published?" do
     before { allow(subject).to receive(:published?).and_return(true) }
     it { is_expected.to validate_presence_of(:name) }

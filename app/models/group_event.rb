@@ -1,5 +1,6 @@
 class GroupEvent < ActiveRecord::Base
   
+  validates_presence_of :status
   validates_presence_of :name, if: lambda{ |event|event.published? }
   validates_presence_of :description, if: lambda{ |event|event.published? }
   validates_presence_of :location, if: lambda{ |event|event.published? }

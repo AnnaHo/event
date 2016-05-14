@@ -43,6 +43,23 @@ describe 'POST /v1/group_events', type: :request do
   end
 end
 
+describe 'PUT /v1/group_events/:id', type: :request do
+  before do
+    @group_event = GroupEvent.create(name: "rails meetup", status: "draft")
+  end
+
+  it 'update an group event successfully with valid params' do
+    put "/v1/group_events/#{@group_event.id}", {group_event: {location: "tapei"}}
+    @group_event.reload
+    expect(response_json).to eq(JSON.parse(@group_event.to_json)) 
+  end
+
+  it 'update an group event failed with invalid params' do
+    put "/v1/group_events/#{@group_event.id}", {group_event: {status: "published"}}
+    expect(response).to have_http_status 422
+  end
+end
+
 def response_json
   JSON.parse(response.body)
 end
