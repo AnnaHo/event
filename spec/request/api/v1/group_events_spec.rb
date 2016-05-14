@@ -8,6 +8,7 @@ describe 'GET /v1/group_events', type: :request do
 
   it 'get all group_events' do
     get '/v1/group_events'
-    expect(JSON.parse(response.body)).to eq [@event]
+    result = JSON.parse(response.body)
+    expect(result.size).to be 1
   end
 end
