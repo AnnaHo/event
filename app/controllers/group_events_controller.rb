@@ -15,6 +15,7 @@ class GroupEventsController < ApplicationController
     if @group_event.save
       redirect_to group_events_path
     else
+      flash[:danger] = @group_event.errors.full_messages
       render :new
     end
   end
@@ -28,6 +29,7 @@ class GroupEventsController < ApplicationController
     if @group_event.update(group_event_params)
       redirect_to group_events_path
     else
+      flash[:danger] = @group_event.errors.full_messages
       render :edit
     end 
   end
@@ -38,7 +40,7 @@ class GroupEventsController < ApplicationController
       @group_event.save
       redirect_to group_events_path
     else
-      flash[:error] = "Event can't be removed"
+      flash[:danger] = "Event can't be removed"
       render :index
     end
   end

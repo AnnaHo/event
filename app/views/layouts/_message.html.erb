@@ -1,0 +1,12 @@
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>">
+  <%if value.is_a?(String)%>
+    <%= value %>
+  <% elsif value.is_a?(Array)%>
+    <% value.each do |value| %>
+      <li><%= value %></li>
+    <%end%>
+  <% end%>
+  </div>
+<% end %>
+<% flash.clear %>

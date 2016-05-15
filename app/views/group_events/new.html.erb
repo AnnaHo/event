@@ -1,7 +1,8 @@
-<%= render partial: "layouts/header"%>
+<%= render "layouts/header"%>
 
 <div class="jumbotron">
 <div class="container">
+  <%= render "layouts/message" %>
   <div class="row">
     <%= form_tag('/group_events') do %>
       <div class="form-group">
