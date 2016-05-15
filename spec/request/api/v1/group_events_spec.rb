@@ -96,6 +96,44 @@ describe 'PUT /v1/group_events/:id', type: :request do
     put "/v1/group_events/#{@group_event.id}", {group_event: {status: "published"}}
     expect(response).to have_http_status 422
   end
+
+  it 'update an event successfully with calculating by duration date and empty end_date' do
+    start_date = DateTime.now
+    put "/v1/group_events/#{@group_event.id}", {group_event: {name: "a published event", 
+                                                                location: "Taipei", 
+                                                                start_date: start_date, 
+                                                                end_date: "",
+                                                                duration: "2", 
+                                                                description: "RailsPacific 2016", 
+                                                                status: "published"}}
+    @group_event.reload
+    expect(response_json).to eq(JSON.parse(@group_event.to_json))
+  end
+
+  it 'update an event successfully with calculating by duration date and empty start_date' do
+    end_date = DateTime.now
+    put "/v1/group_events/#{@group_event.id}", {group_event: {name: "a published event", 
+                                                               location: "Taipei", 
+                                                               start_date: "", 
+                                                               end_date: end_date,
+                                                               duration: "2", 
+                                                               description: "RailsPacific 2016", 
+                                                               status: "published"}}
+    @group_event.reload
+    expect(response_json).to eq(JSON.parse(@group_event.to_json))
+  end
+
+  it 'update an event successfully with calculating by duration date and empty start_date and end_date' do
+    put "/v1/group_events/#{@group_event.id}", {group_event: {name: "a published event", 
+                                                               location: "Taipei", 
+                                                               start_date: "", 
+                                                               end_date: "",
+                                                               duration: "2", 
+                                                               description: "RailsPacific 2016", 
+                                                               status: "published"}}
+    @group_event.reload
+    expect(response_json).to eq(JSON.parse(@group_event.to_json))
+  end
 end
 
 describe 'DELETE /v1/group_events/:id', type: :request do
