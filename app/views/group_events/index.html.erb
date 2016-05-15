@@ -1,0 +1,65 @@
+
+<%= render partial: "layouts/header"%>
+  <div>
+    <div class="container-fluid">
+      <div class-"row">
+        <%= link_to "create an event", new_group_event_path, :class => "btn btn-primary"%>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          Name
+        </div>
+        <div class="col-sm-3">
+          description
+        </div>
+        <div class="col-sm-1">
+          location
+        </div>
+        <div class="col-sm-1">
+          start date
+        </div>
+        <div class="col-sm-1">
+          end date
+        </div>
+        <div class="col-sm-1">
+          status
+        </div>
+        <div class="col-sm-2">
+          edit
+          delete
+        </div>
+      </div>
+      <div class="row">
+        <% @group_events.each do |group_event|%>
+        <div class="col-sm-3">
+          <%= group_event.name%>
+        </div>
+        <div class="col-sm-3">
+          <%= raw group_event.description %>
+        </div>
+        <div class="col-sm-1">
+          <%= group_event.location %>
+        </div>
+        <div class="col-sm-1">
+          <%= group_event.start_date.try(:strftime, "%Y/%m/%d") %>
+        </div>
+        <div class="col-sm-1">
+          <%= group_event.end_date.try(:strftime, "%Y/%m/%d") %>
+        </div>
+        <div class="col-sm-1">
+          <%= group_event.status %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to edit_group_event_path(group_event.id), class: "btn btn-sm" do %>
+            <i class="glyphicon glyphicon-pencil"></i>
+          <% end %>
+          <%=  link_to group_event_path(group_event), method: :delete, data: { confirm: 'Are you sure?' } do%>
+            <i class="glyphicon glyphicon-trash"></i>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
