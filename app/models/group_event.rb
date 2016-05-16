@@ -8,9 +8,13 @@ class GroupEvent < ActiveRecord::Base
   validates_presence_of :end_date, if: lambda { |event| event.published? }
   validates_presence_of :duration, if: lambda { |event| event.published? }
   validate :end_date_after_start_date
-  before_validation :set_start_date
-  before_validation :set_end_date
-  before_validation :set_duration
+  before_validation :set_event_date
+
+  def set_event_date
+    set_start_date
+    set_end_date
+    set_duration
+  end
 
   def set_start_date
     self.start_date ||= (end_date && duration) ? (end_date - duration.to_i.days) : start_date
