@@ -7,8 +7,6 @@ class Api::V1::GroupEventsController < ApiController
 
   def create
     @group_event = GroupEvent.new(group_event_params)
-    @group_event.calculate_event_date
-
     if @group_event.save
       render json: @group_event
     else
@@ -17,10 +15,7 @@ class Api::V1::GroupEventsController < ApiController
   end
 
   def update
-    @group_event.assign_attributes(group_event_params)
-    @group_event.calculate_event_date
-
-    if @group_event.save
+    if @group_event.update(group_event_params)
       render json: @group_event
     else
       render json: {message: "failed to update event with invalid params", errors: @group_event.errors.full_messages}, status: 422
